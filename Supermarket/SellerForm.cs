@@ -15,9 +15,9 @@ namespace Supermarket
         {
             InitializeComponent();
         }
-        readonly HellperClass obj = new HellperClass();
-        // SqlConnection Con = new SqlConnection(Properties.Settings.Default.DatabaseConnectionString);
-        SqlConnection Con = new SqlConnection(@"Data Source=DESKTOP-M15F5BI\MSSQLSERVER_OLAP;Initial Catalog=smarketdb;Integrated Security=True");
+        readonly HelperClass obj = new HelperClass();
+         SqlConnection Con = new SqlConnection(Properties.Settings.Default.SqlConnectionString);
+        //SqlConnection Con = new SqlConnection(@"Data Source=DESKTOP-M15F5BI\MSSQLSERVER_OLAP;Initial Catalog=smarketdb;Integrated Security=True");
 
 
         private void dataGridView1_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -94,6 +94,27 @@ namespace Supermarket
         private void SellerForm_Load(object sender, EventArgs e)
         {
             Populate();
+        }
+
+        private void Button_Products_Click(object sender, EventArgs e)
+        {
+            ProductForm product = new ProductForm();
+            product.Show();
+            this.Hide();
+        }
+
+        private void Button_Categories_Click(object sender, EventArgs e)
+        {
+            CategoryForm category = new CategoryForm();
+            category.Show();
+            this.Hide();
+        }
+
+        private void Button_Selling_Click(object sender, EventArgs e)
+        {
+            SellingForm selling = new SellingForm();
+            selling.Show();
+            this.Hide();
         }
     }
 }

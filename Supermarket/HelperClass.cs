@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Supermarket
 {
-    public class HellperClass
+    public class HelperClass
     {
-        SqlConnection Con = new SqlConnection(@"Data Source=DESKTOP-M15F5BI\MSSQLSERVER_OLAP;Initial Catalog=smarketdb;Integrated Security=True");
-           
+        private static readonly SqlConnection Con = new SqlConnection(Properties.Settings.Default.SqlConnectionString);    
         public void Delete(string query)
         {
             try

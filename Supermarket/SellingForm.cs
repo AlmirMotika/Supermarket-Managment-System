@@ -11,84 +11,31 @@ namespace Supermarket
 {
     public partial class SellingForm : Form
     {
+        readonly HelperClass HelperDG = new HelperClass();
         public SellingForm()
         {
             InitializeComponent();
         }
-        SqlConnection Con = new SqlConnection(@"Data Source=DESKTOP-M15F5BI\MSSQLSERVER_OLAP;Initial Catalog=smarketdb;Integrated Security=True");
+        private readonly SqlConnection Con = new SqlConnection(Properties.Settings.Default.SqlConnectionString);
 
         private void Populate()
-        {
-            Con.Open();
+        {            
             string query = "select ProdName,ProdQty from ProductTbl";
-            SqlDataAdapter sda = new SqlDataAdapter(query, Con);
-            SqlCommandBuilder builder = new SqlCommandBuilder(sda);
-            var ds = new DataSet();
-            sda.Fill(ds);
-            DGV_Prod.DataSource = ds.Tables[0];
-            Con.Close();
-        }
-        private void Populatebills()
-        {
-            Con.Open();
-            string query = "select * from BillTbl";
-            SqlDataAdapter sda = new SqlDataAdapter(query, Con);
-            SqlCommandBuilder builder = new SqlCommandBuilder(sda);
-            var ds = new DataSet();
-            sda.Fill(ds);
-            DGV_Bills.DataSource = ds.Tables[0];
-            ShowListView(ds.Tables[0]);
-            Con.Close();
-        }
-
-        private void ShowListView(DataTable dataTable)
-        {
-            ListView listView = new ListView();
-            listView.View = View.Details;
-            listView.Dock = DockStyle.Fill;
-
-            // Create list view columns
-            foreach (DataColumn dataColumn in dataTable.Columns)
-            {
-                listView.Columns.Add(dataColumn.Caption);
-            }
-
-            // Create list view items
-            foreach (DataRow dataRow in dataTable.Rows)
-            {
-                string[] cellValues = new string[dataTable.Columns.Count];
-
-                for (int i = 0; i < dataTable.Columns.Count; i++)
-                {
-                    object cellValue = dataRow[i];
-                    if (cellValue != null)
-                    {
-                        cellValues[i] = cellValue.ToString();
-                    }
-                }
-                ListViewItem rootItem = new ListViewItem(cellValues);
-                listView.Items.Add(rootItem);
-            }
-            listView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-
-
-            var form = new Form();
-            form.Controls.Add(listView);
-            form.ShowDialog();
-        }
-
-        private void DGV_Prod_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
+            DGV_Prod.DataSource = HelperDG.Get(query).Tables[0];
             
         }
-
+        private void Populatebills()
+        {           
+            string query = "select * from BillTbl";
+            DGV_Bills.DataSource = HelperDG.Get(query).Tables[0];      
+        }
         private void SellingForm_Load(object sender, EventArgs e)
         {
             Populate();
             Populatebills();
 
         }
-        int flag = 0;
+        
 
         private void DGV_Prod_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
@@ -103,7 +50,7 @@ namespace Supermarket
         }
         int Grdtotal = 0, n = 0;
 
-        private void btn_Add_Sell_List_Click(object sender, EventArgs e)
+        private void Btn_Add_Sell_List_Click(object sender, EventArgs e)
         {
             if (txt_Bill_ID.Text == "")
             {
@@ -137,10 +84,10 @@ namespace Supermarket
 
         private void DGV_Bills_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            flag = 1;
+           
         }
 
-        private void button_Print_Click(object sender, EventArgs e)
+        private void Button_Print_Click(object sender, EventArgs e)
         {
             if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -148,7 +95,7 @@ namespace Supermarket
             }
         }
 
-        private void button_DELETE_Click(object sender, EventArgs e)
+        private void Button_DELETE_Click(object sender, EventArgs e)
         {
 
         }

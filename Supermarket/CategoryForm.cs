@@ -14,7 +14,7 @@ namespace Supermarket
         {
             InitializeComponent();
         }
-        SqlConnection Con = new SqlConnection(@"Data Source=DESKTOP-M15F5BI\MSSQLSERVER_OLAP;Initial Catalog=smarketdb;Integrated Security=True");
+        private readonly SqlConnection Con = new SqlConnection(Properties.Settings.Default.SqlConnectionString);
 
         private void button_ADD_Click(object sender, EventArgs e)
         {
@@ -43,18 +43,10 @@ namespace Supermarket
             CatDGV.DataSource = ds.Tables[0];
             Con.Close();
         }
-        private void CatDGV_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-         
-
-
-        }
 
         private void CategoryForm_Load(object sender, EventArgs e)
         {
             Populate(); 
-
         }
 
         private void CatDGV_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -66,7 +58,7 @@ namespace Supermarket
 
         }
 
-        private void button_DELETE_Click(object sender, EventArgs e)
+        private void Button_DELETE_Click(object sender, EventArgs e)
         {
             try
             {
@@ -115,10 +107,17 @@ namespace Supermarket
             this.Hide();
         }
 
-        private void button_Sellers_Click(object sender, EventArgs e)
+        private void Button_Sellers_Click(object sender, EventArgs e)
         {
             SellerForm sell = new SellerForm();
             sell.Show();
+            this.Hide();
+        }
+
+        private void Button_Selling_Click(object sender, EventArgs e)
+        {
+            SellingForm selling = new SellingForm();
+            selling.Show();
             this.Hide();
         }
     }

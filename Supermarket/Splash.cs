@@ -18,7 +18,7 @@ namespace Supermarket
         int startpoint = 0;
         private void timer1_Tick(object sender, EventArgs e)
         {
-            startpoint += 1;
+            startpoint += 4;
             MyProgress.Value = startpoint;
             if (MyProgress.Value == 100)
             {

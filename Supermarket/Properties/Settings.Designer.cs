@@ -26,11 +26,11 @@ namespace Supermarket.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("\"Data Source=DESKTOP-M15F5BI\\MSSQLSERVER_OLAP;Initial Catalog=smarketdb;Integrate" +
-            "d Security=True\"")]
-        public string DatabaseConnectionString {
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-LR9M36G\\MSSQLSERVER_OLAP;Initial Catalog=smarketdb;Integrated" +
+            " Security=True")]
+        public string SqlConnectionString {
             get {
-                return ((string)(this["DatabaseConnectionString"]));
+                return ((string)(this["SqlConnectionString"]));
             }
         }
     }

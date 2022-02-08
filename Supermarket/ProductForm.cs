@@ -15,9 +15,9 @@ namespace Supermarket
             InitializeComponent();
         }
 
-        readonly HellperClass obj = new HellperClass();
+        readonly HelperClass obj = new HelperClass();
         //  readonly SqlConnection Con = new SqlConnection(Properties.Settings.Default.DatabaseConnectionString);
-        SqlConnection Con = new SqlConnection(@"Data Source=DESKTOP-M15F5BI\MSSQLSERVER_OLAP;Initial Catalog=smarketdb;Integrated Security=True");
+        //private readonly SqlConnection Con = new SqlConnection(Properties.Settings.Default.SqlConnectionString);
 
         private void Button5_Click(object sender, EventArgs e)
         {
@@ -73,7 +73,7 @@ namespace Supermarket
         }
         private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
+          
         }       
         private void Button_ADD_Click(object sender, EventArgs e)
         {

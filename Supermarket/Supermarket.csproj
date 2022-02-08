@@ -55,7 +55,8 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="HellperClass.cs" />
+    <Compile Include="HelperClass.cs" />
+    <Compile Include="HelperDataGrid.cs" />
     <Compile Include="ProductForm.cs">
       <SubType>Form</SubType>
     </Compile>
