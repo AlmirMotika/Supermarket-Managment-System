@@ -32,9 +32,9 @@ namespace Supermarket
         }      
         private void ProductForm_Load(object sender, EventArgs e)
         {           
-            string ColumnName = "CatName";           
-            Cat_combo.ValueMember = ColumnName;
-            Cat_combo.DataSource = obj.FillCombo("Select CatName from CategoryTbl", ColumnName);
+            //string ColumnName = "CatName";           
+            //Cat_combo.ValueMember = ColumnName;
+            //Cat_combo.DataSource = obj.FillCombo("Select CatName from CategoryTbl", ColumnName);
             Populate();
         }
 
