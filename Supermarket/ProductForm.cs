@@ -13,17 +13,12 @@ namespace Supermarket
         public ProductForm()
         {
             InitializeComponent();
-        }
-       
-        private void Button5_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }      
+        }   
+        
         private void Populate()
         {            
             string query = "Select * from ProductTbl";            
-            dataGridView1_Cell.DataSource = HelperDataGrid.Get(query).Tables[0];      
-            
+            dataGridView1_Cell.DataSource = HelperDataGrid.Get(query).Tables[0];                  
         } 
                
         private void ProductForm_Load(object sender, EventArgs e)
@@ -31,7 +26,7 @@ namespace Supermarket
             string query = "select CatName from CategoryTbl";
             Populate();            
             combo_Category_Data.ValueMember = "catName";
-            combo_Category_Data.DataSource= HelperDataGrid.FillCombo(query, "CatName");
+            combo_Category_Data.DataSource= ComboHelper.FillCombo(query, "CatName");
         }
 
         private void Button_Cat_Click(object sender, EventArgs e)

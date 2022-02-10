@@ -122,24 +122,28 @@ namespace Supermarket
 
         private void Add_Product_Click(object sender, EventArgs e)
         {
-            if(txt_Prod_Name.Text=="" || txt_Quantity.Text=="")
+            var name = txt_Prod_Name.Text;
+            var quantity = txt_Quantity.Text;
+            var price = txt_Prod_Price.Text;
+
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(price))
             {
                 MessageBox.Show("Missing Data");
             }
-            int price = 0, quantity = 0, total=0;
-            if(int.TryParse(txt_Prod_Price.Text,out price) && int.TryParse(txt_Quantity.Text,out quantity))
-            total = price * quantity;
+            int price2 = 0, quantity2 = 0, total=0;
+            if(int.TryParse(price,out price2) && int.TryParse(quantity,out quantity2))
+            total = price2 * quantity2;
             
             DataGridViewRow newRow = new DataGridViewRow();
             newRow.CreateCells(Order_DGV);
             newRow.Cells[0].Value = n + 1;
-            newRow.Cells[1].Value = txt_Prod_Name.Text;
-            newRow.Cells[2].Value = txt_Prod_Price.Text;
-            newRow.Cells[3].Value = txt_Quantity.Text;
-            newRow.Cells[4].Value = price*quantity;
+            newRow.Cells[1].Value = name;
+            newRow.Cells[2].Value = price;
+            newRow.Cells[3].Value = quantity;
+            newRow.Cells[4].Value = price2*quantity2;
             Order_DGV.Rows.Add(newRow);
             n++;
-            Grdtotal = Grdtotal + total;
+            Grdtotal += total;
             Total_lbl.Text = Grdtotal.ToString();
 
 

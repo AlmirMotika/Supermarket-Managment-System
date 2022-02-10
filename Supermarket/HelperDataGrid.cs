@@ -24,9 +24,7 @@ namespace Supermarket
                 MessageBox.Show(ex.Message);
             }
         }
-        
-        
-        
+                     
         public static DataSet Get(string query)
         {
             Con.Open();

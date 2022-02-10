@@ -15,10 +15,8 @@ namespace Supermarket
         {
             InitializeComponent();
         }
-        readonly HelperDataGrid obj = new HelperDataGrid();
-         SqlConnection Con = new SqlConnection(Properties.Settings.Default.SqlConnectionString);
-        //SqlConnection Con = new SqlConnection(@"Data Source=DESKTOP-M15F5BI\MSSQLSERVER_OLAP;Initial Catalog=smarketdb;Integrated Security=True");
 
+        private readonly SqlConnection Con = new SqlConnection(Properties.Settings.Default.SqlConnectionString);
 
         private void dataGridView1_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
@@ -32,24 +30,22 @@ namespace Supermarket
 
         private void Populate()
         {
-            Con.Open();
             string query = "Select * from SellerTbl";
-            SqlDataAdapter sda = new SqlDataAdapter(query, Con);
-            var ds = new DataSet();
-            sda.Fill(ds);
-            DGV_Sell.DataSource = ds.Tables[0];
-            Con.Close();
+            DGV_Sell.DataSource = HelperDataGrid.Get(query).Tables[0];
         }
-        private void button_ADD_Click(object sender, EventArgs e)
+
+        private void Button_ADD_Click(object sender, EventArgs e)
         {
+            var id = txt_Sell_ID.Text;
+            var name = txt_Sell_Name.Text;
+            var phone = txt_Sell_Phone.Text;
+            var age = txt_Sell_Age.Text;
+            var password = txt_Sell_Pass.Text;
             try
             {
-                Con.Open();
-                string query = "insert into SellerTbl values(" + txt_Sell_ID.Text + ",'" + txt_Sell_Name.Text + "'," + txt_Sell_Age.Text + ",'"+txt_Sell_Phone.Text+"','"+txt_Sell_Pass.Text+"')";
-                SqlCommand cmd = new SqlCommand(query, Con);
-                cmd.ExecuteNonQuery();
-                MessageBox.Show("Seller added successfully");
-                Con.Close();
+                string query = $"insert into SellerTbl values({id},'{name}',{age},'{phone}','{password}')";
+                if (HelperDataGrid.InsertOrEdit(query))
+                    MessageBox.Show("Added Successfuly");
                 Populate();
             }
             catch (Exception ex)
@@ -61,27 +57,28 @@ namespace Supermarket
         private void Button_DELETE_Click(object sender, EventArgs e)
         {           
             string query = "delete from SellerTbl where SellerId=" + txt_Sell_ID.Text + "";               
-            obj.Delete(query);
+            HelperDataGrid.Delete(query);
             Populate();
-
         }
 
-        private void button_EDIT_Click(object sender, EventArgs e)
+        private void Button_EDIT_Click(object sender, EventArgs e)
         {
+            var id = txt_Sell_ID.Text;
+            var name = txt_Sell_Name.Text;
+            var phone = txt_Sell_Phone.Text;
+            var age = txt_Sell_Age.Text;
+            var password = txt_Sell_Pass.Text;
             try
             {
-                if (txt_Sell_ID.Text == "" || txt_Sell_Name.Text == "" || txt_Sell_Phone.Text == "" || txt_Sell_Age.Text == "" || txt_Sell_Pass.Text == "")
+                if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(name) || string.IsNullOrEmpty(phone) || string.IsNullOrEmpty(age) || string.IsNullOrEmpty(password))
                 {
                     MessageBox.Show("Missing information");
                 }
                 else
                 {
-                    Con.Open();
-                    string query = "update SellerTbl set SellerName='" + txt_Sell_Name.Text + "',SellerAge=" + txt_Sell_Age.Text + ",SellerPhone='"+ txt_Sell_Phone.Text+"',SellerPass='"+ txt_Sell_Pass.Text+"'where SellerId =" + txt_Sell_ID.Text + ";";
-                    SqlCommand cmd = new SqlCommand(query, Con);
-                    cmd.ExecuteNonQuery();
-                    MessageBox.Show("Seller successfully updated");
-                    Con.Close();
+                    string query = $"update SellerTbl set SellerName='{name}',SellerAge={age},SellerPhone='{phone}',SellerPass='{password}' where SellerId ={id};";
+                    if (HelperDataGrid.InsertOrEdit(query))
+                        MessageBox.Show("Updated Successfuly");
                     Populate();
                 }
             }

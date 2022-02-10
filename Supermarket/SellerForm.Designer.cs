@@ -123,7 +123,7 @@
             this.button_EDIT.TabIndex = 14;
             this.button_EDIT.Text = "EDIT";
             this.button_EDIT.UseVisualStyleBackColor = false;
-            this.button_EDIT.Click += new System.EventHandler(this.button_EDIT_Click);
+            this.button_EDIT.Click += new System.EventHandler(this.Button_EDIT_Click);
             // 
             // button_ADD
             // 
@@ -138,7 +138,7 @@
             this.button_ADD.TabIndex = 13;
             this.button_ADD.Text = "ADD";
             this.button_ADD.UseVisualStyleBackColor = false;
-            this.button_ADD.Click += new System.EventHandler(this.button_ADD_Click);
+            this.button_ADD.Click += new System.EventHandler(this.Button_ADD_Click);
             // 
             // label5
             // 
