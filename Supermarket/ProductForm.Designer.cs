@@ -85,12 +85,13 @@
             this.button_refresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_refresh.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_refresh.ForeColor = System.Drawing.Color.YellowGreen;
-            this.button_refresh.Location = new System.Drawing.Point(547, 45);
+            this.button_refresh.Location = new System.Drawing.Point(562, 45);
             this.button_refresh.Name = "button_refresh";
             this.button_refresh.Size = new System.Drawing.Size(88, 24);
             this.button_refresh.TabIndex = 18;
             this.button_refresh.Text = "Refresh";
             this.button_refresh.UseVisualStyleBackColor = false;
+            this.button_refresh.Click += new System.EventHandler(this.Button_refresh_Click);
             // 
             // combo_Category_Data
             // 
@@ -112,7 +113,6 @@
             this.dataGridView1_Cell.Name = "dataGridView1_Cell";
             this.dataGridView1_Cell.Size = new System.Drawing.Size(474, 467);
             this.dataGridView1_Cell.TabIndex = 16;
-            this.dataGridView1_Cell.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick);
             this.dataGridView1_Cell.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridView1_RowHeaderMouseClick);
             // 
             // button_DELETE

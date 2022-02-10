@@ -15,7 +15,7 @@ namespace Supermarket
         {
             InitializeComponent();
         }
-        readonly HelperClass obj = new HelperClass();
+        readonly HelperDataGrid obj = new HelperDataGrid();
          SqlConnection Con = new SqlConnection(Properties.Settings.Default.SqlConnectionString);
         //SqlConnection Con = new SqlConnection(@"Data Source=DESKTOP-M15F5BI\MSSQLSERVER_OLAP;Initial Catalog=smarketdb;Integrated Security=True");
 

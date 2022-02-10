@@ -11,7 +11,6 @@ namespace Supermarket
 {
     public partial class SellingForm : Form
     {
-        readonly HelperClass HelperDG = new HelperClass();
         public SellingForm()
         {
             InitializeComponent();
@@ -21,13 +20,13 @@ namespace Supermarket
         private void Populate()
         {            
             string query = "select ProdName,ProdQty from ProductTbl";
-            DGV_Prod.DataSource = HelperDG.Get(query).Tables[0];
+            DGV_Prod.DataSource = HelperDataGrid.Get(query).Tables[0];
             
         }
         private void Populatebills()
         {           
             string query = "select * from BillTbl";
-            DGV_Bills.DataSource = HelperDG.Get(query).Tables[0];      
+            DGV_Bills.DataSource = HelperDataGrid.Get(query).Tables[0];      
         }
         private void SellingForm_Load(object sender, EventArgs e)
         {

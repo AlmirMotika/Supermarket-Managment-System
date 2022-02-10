@@ -14,28 +14,24 @@ namespace Supermarket
         {
             InitializeComponent();
         }
-
-        readonly HelperClass obj = new HelperClass();
-        //  readonly SqlConnection Con = new SqlConnection(Properties.Settings.Default.DatabaseConnectionString);
-        //private readonly SqlConnection Con = new SqlConnection(Properties.Settings.Default.SqlConnectionString);
-
+       
         private void Button5_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }      
         private void Populate()
-        {
-            
+        {            
             string query = "Select * from ProductTbl";            
-            dataGridView1_Cell.DataSource = obj.Get(query).Tables[0];
+            dataGridView1_Cell.DataSource = HelperDataGrid.Get(query).Tables[0];      
             
-        }      
+        } 
+               
         private void ProductForm_Load(object sender, EventArgs e)
-        {           
-            //string ColumnName = "CatName";           
-            //Cat_combo.ValueMember = ColumnName;
-            //Cat_combo.DataSource = obj.FillCombo("Select CatName from CategoryTbl", ColumnName);
-            Populate();
+        {
+            string query = "select CatName from CategoryTbl";
+            Populate();            
+            combo_Category_Data.ValueMember = "catName";
+            combo_Category_Data.DataSource= HelperDataGrid.FillCombo(query, "CatName");
         }
 
         private void Button_Cat_Click(object sender, EventArgs e)
@@ -70,31 +66,28 @@ namespace Supermarket
             SellerForm sell = new SellerForm();
             sell.Show();
             this.Hide();
-        }
-        private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-          
-        }       
+        }     
         private void Button_ADD_Click(object sender, EventArgs e)
         {
             string query = "insert into ProductTbl values(" + txt_Prod_ID.Text + ",'" + txt_Name.Text + "'," + txt_Qty.Text + "," + txt_Price.Text + ",'" + Cat_combo.SelectedValue.ToString() + "')";
-            if (obj.InsertOrEdit(query))
+            if (HelperDataGrid.InsertOrEdit(query))
                 MessageBox.Show("Added Successfuly");
             Populate();
 
         }
         
         private void Button_EDIT_Click(object sender, EventArgs e)
-        {           
-               
-            if (string.IsNullOrEmpty(txt_Prod_ID.Text) || string.IsNullOrEmpty(txt_Name.Text) || string.IsNullOrEmpty(txt_Qty.Text) || string.IsNullOrEmpty(txt_Price.Text))
+        {
+            var prodId = txt_Prod_ID.Text;
+            var name = txt_Name.Text;
+            if (string.IsNullOrEmpty(prodId) || string.IsNullOrEmpty(name) || string.IsNullOrEmpty(txt_Qty.Text) || string.IsNullOrEmpty(txt_Price.Text))
             {                    
                 MessageBox.Show("Missing information");
             }
             else
             {                                  
-                string query = "update ProductTbl set ProdName='" + txt_Name.Text + "',ProdPrice=" + txt_Price.Text + ",ProdQty=" + txt_Qty.Text + ",ProdCat='" + Cat_combo.SelectedValue.ToString() + "'where ProdID =" + txt_Prod_ID.Text + ";";                
-                if (obj.InsertOrEdit(query))
+                string query = $"update ProductTbl set ProdName='{name}',ProdPrice={txt_Price.Text}, ProdQty=" + txt_Qty.Text + ",ProdCat='" + Cat_combo.SelectedValue.ToString() + "'where ProdID =" + txt_Prod_ID.Text + ";";                
+                if (HelperDataGrid.InsertOrEdit(query))
                     MessageBox.Show("Updated Successfuly");
                 Populate();
             }
@@ -104,7 +97,7 @@ namespace Supermarket
         private void Button_DELETE_Click(object sender, EventArgs e)
         {                     
             string query = "delete from ProductTbl where ProdID=" + txt_Prod_ID.Text + "";
-            obj.Delete(query);
+            HelperDataGrid.Delete(query);
             Populate();
         }
 
@@ -114,5 +107,14 @@ namespace Supermarket
             sf.Show();
             this.Hide();
         }
+
+        private void Button_refresh_Click(object sender, EventArgs e)
+        {
+            txt_Prod_ID.Text = string.Empty;
+            txt_Name.Text = string.Empty;
+            txt_Price.Text = string.Empty;
+            txt_Qty.Text = string.Empty;            
+        }
+
     }
 }

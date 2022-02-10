@@ -14,18 +14,15 @@ namespace Supermarket
         {
             InitializeComponent();
         }
-        private readonly SqlConnection Con = new SqlConnection(Properties.Settings.Default.SqlConnectionString);
+        private readonly SqlConnection Con = new SqlConnection(Properties.Settings.Default.SqlConnectionString);        
 
-        private void button_ADD_Click(object sender, EventArgs e)
+        private void Button_ADD_Click(object sender, EventArgs e)
         {
             try
             {
-                Con.Open();
-                string query = "insert into CategoryTbl values(" + CatIdTbl.Text + ",'" + CatNameTbl.Text + "','" + CatDescTbl.Text + "')";
-                SqlCommand cmd = new SqlCommand(query, Con);
-                cmd.ExecuteNonQuery();
-                MessageBox.Show("Category added successfully");
-                Con.Close();
+                string query = "insert into ProductTbl values(" + CatIdTbl.Text + ",'" + CatNameTbl.Text + "'," + CatDescTbl.Text + "')";
+                if (HelperDataGrid.InsertOrEdit(query))
+                    MessageBox.Show("Added Successfuly");
                 Populate();
             }catch(Exception ex)
             {
@@ -34,14 +31,9 @@ namespace Supermarket
 
         }
         private void Populate()
-        {
-            Con.Open();
+        {          
             string query = "Select * from CategoryTbl";
-            SqlDataAdapter sda = new SqlDataAdapter(query, Con);
-            var ds = new DataSet();
-            sda.Fill(ds);
-            CatDGV.DataSource = ds.Tables[0];
-            Con.Close();
+            CatDGV.DataSource = HelperDataGrid.Get(query).Tables[0];
         }
 
         private void CategoryForm_Load(object sender, EventArgs e)
@@ -61,46 +53,45 @@ namespace Supermarket
         private void Button_DELETE_Click(object sender, EventArgs e)
         {
             try
-            {
-                Con.Open();
+            {             
                 string query = "delete from CategoryTbl where CatId=" + CatIdTbl.Text + "";
-                SqlCommand cmd = new SqlCommand(query, Con);
-                cmd.ExecuteNonQuery();
-                MessageBox.Show("Category deleted successfully");
-                Con.Close();
+                HelperDataGrid.Delete(query);
                 Populate();
-
-            }catch(Exception ex)
+                MessageBox.Show("Category deleted successfully");                                               
+            }
+            catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
-
-        private void button_EDIT_Click(object sender, EventArgs e)
+        private void Button_EDIT_Click(object sender, EventArgs e)
         {
+            var Id = CatIdTbl.Text;
+            var name = CatNameTbl.Text;
+            var desc = CatDescTbl.Text;
+
             try
             {
-                if(CatIdTbl.Text=="" || CatNameTbl.Text=="" || CatDescTbl.Text == "")
+                if (string.IsNullOrEmpty(Id) || string.IsNullOrEmpty(name) || string.IsNullOrEmpty(desc))
                 {
                     MessageBox.Show("Missing information");
                 }
                 else
                 {
-                    Con.Open();
-                    string query = "update CategoryTbl set CatName='" + CatNameTbl.Text + "',CatDesc='" + CatDescTbl.Text + "'where CatId=" + CatIdTbl.Text + ";";
-                    SqlCommand cmd = new SqlCommand(query, Con);
-                    cmd.ExecuteNonQuery();
-                    MessageBox.Show("Category successfully updated");
-                    Con.Close();
+                    string query = "update ProductTbl set ProdName='" + name + "',ProdPrice=" + desc + "'where CatId=" + Id + ";";
+                    if (HelperDataGrid.InsertOrEdit(query))
+                        MessageBox.Show("Updated Successfuly");
                     Populate();
                 }
-            }catch(Exception ex)
+            }
+            catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+            
         }
 
-        private void button_Products_Click(object sender, EventArgs e)
+        private void Button_Products_Click(object sender, EventArgs e)
         {
             ProductForm prod = new ProductForm();
             prod.Show();
@@ -120,6 +111,7 @@ namespace Supermarket
             selling.Show();
             this.Hide();
         }
+
     }
 }
  
